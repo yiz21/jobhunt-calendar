@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import * as actions from '../actions/auth_action'
+import * as actions from '../actions/action'
 import firebase from '../firebase/firebase'
 import LoginForm  from '../components/loginForm'
 

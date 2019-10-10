@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import * as actions from '../actions/auth_action'
+import * as actions from '../actions/action'
 import firebase from '../firebase/firebase'
 import scheduleView from '../components/scheduleView'
 
@@ -28,6 +28,15 @@ const mapDispatchToProps = dispatch => {
       firebase.auth().signOut()
         .then( () => {
           dispatch(actions.updateUid(''))
+        })
+    },
+    resisterPlan: ( info ) => {
+      // 既に登録済みの日時については上書きされる
+      firebase.firestore().collection(info.uid).doc(info.date.toString()).set({
+        station: info.station,
+      })
+        .then(() => {
+          dispatch(actions.addPlan(info))
         })
     }
   }

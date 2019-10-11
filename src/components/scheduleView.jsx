@@ -23,9 +23,9 @@ export default class ScheduleView extends React.Component {
     console.log(this.props)
     return (
       <div>
-        <Header/>
-        <p>ログイン済みです uid: {this.props.uid}</p>
-        <OutlinedButton onClick={this.props.signOut} label="ログアウト"/>
+        <Header onClick={this.props.signOut} />
+        {/* <p>ログイン済みです uid: {this.props.uid}</p> */}
+        {/* <OutlinedButton onClick={this.props.signOut} label="ログアウト"/> */}
         <ResistButton sendFunction={this.setPlanToStore}/>
       </div>
     )

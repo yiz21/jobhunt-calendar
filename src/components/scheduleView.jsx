@@ -1,17 +1,12 @@
 import React from 'react'
 import ResistButton from './resistrationButton'
 import OutlinedButton from './outlineButton'
+import Header from './header'
 
 export default class ScheduleView extends React.Component {
   constructor(props) {
     super(props);
     this.setPlanToStore = this.setPlanToStore.bind(this);
-  }
-  state = {
-    uid: this.props.uid,
-    date: "20000101",
-    time: "10:00-20:00",
-    station: "shinjuku"
   }
 
   setPlanToStore(sendDate, sendStation) {
@@ -28,6 +23,7 @@ export default class ScheduleView extends React.Component {
     console.log(this.props)
     return (
       <div>
+        <Header/>
         <p>ログイン済みです uid: {this.props.uid}</p>
         <OutlinedButton onClick={this.props.signOut} label="ログアウト"/>
         <ResistButton sendFunction={this.setPlanToStore}/>

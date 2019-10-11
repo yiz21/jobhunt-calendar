@@ -1,7 +1,7 @@
 import React from 'react'
 import TopImage from '../top-image.jpg' 
 import "./loginForm.css"
-
+import OutlinedButton from './outlineButton'
 
 export default class LoginForm extends React.Component {
   state = {
@@ -18,7 +18,7 @@ export default class LoginForm extends React.Component {
     return (
       <div className="root">
         <img src={TopImage} className="backgroundImage" alt="background"/>
-        <a href="#" onClick={() => this.props.loginWithGoogle()}> Googleアカウントでログイン</a>
+        <OutlinedButton className="button" onClick={this.props.loginWithGoogle} label="Googleアカウントでログイン"/>
       </div>
     )
   }

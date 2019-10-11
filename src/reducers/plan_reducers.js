@@ -6,9 +6,6 @@ export const planReducer = (state = initialState, action) => {
   console.log("planReducer > ", state)
   switch (action.type) {
     case 'ADDPLAN':
-      const obj = {
-        reserved: []
-      }
       let storeCopyObj = Object.assign({}, state);
       console.log("planReducer > storeCopyObj", storeCopyObj)
 

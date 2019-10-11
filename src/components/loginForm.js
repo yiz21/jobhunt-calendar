@@ -18,7 +18,7 @@ export default class LoginForm extends React.Component {
     return (
       <div className="root">
         <img src={TopImage} className="backgroundImage" alt="background"/>
-        <a href="#" onClick={() => this.props.loginWithGoogle()}> Googleアカウントでログイン</a>
+        <a href="/#" onClick={() => this.props.loginWithGoogle()}> Googleアカウントでログイン</a>
       </div>
     )
   }

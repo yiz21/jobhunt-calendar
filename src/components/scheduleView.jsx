@@ -1,5 +1,6 @@
 import React from 'react'
 import ResistButton from './resistrationButton'
+import OutlinedButton from './outlineButton'
 
 export default class ScheduleView extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ export default class ScheduleView extends React.Component {
     return (
       <div>
         <p>ログイン済みです uid: {this.props.uid}</p>
-        <a href="/#" onClick={this.props.signOut}> ログアウト</a>
+        <OutlinedButton onClick={this.props.signOut} label="ログアウト"/>
         <ResistButton sendFunction={this.setPlanToStore}/>
       </div>
     )

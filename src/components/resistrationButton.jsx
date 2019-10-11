@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// 予定登録用のボタン　＝＞　上位コンポーネントからRedux操作用関数を受け取ってonClickで実行するだけ
+// 予定登録用のボタン　＝＞　上位コンポーネントからRedux操作用関数を受け取ってonClickで実行する
 export default function ResistButton(props) {
   const [open, setOpen] = React.useState(false);
   const [reserveDate, setReserveDate] = React.useState(new Date('2019-10-07T01:00:00'));

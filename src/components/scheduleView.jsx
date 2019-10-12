@@ -1,6 +1,6 @@
 import React from 'react'
 import ResistButton from './resistrationButton'
-import OutlinedButton from './outlineButton'
+import CalendarView from './calendar'
 import Header from './header'
 
 export default class ScheduleView extends React.Component {
@@ -9,6 +9,13 @@ export default class ScheduleView extends React.Component {
     this.setPlanToStore = this.setPlanToStore.bind(this);
   }
 
+  componentDidMount() {
+    console.log("scheduleView is mounted!!")
+  }
+
+  componentDidUpdate() {
+    console.log("scheduleView is updated!!")
+  }
   setPlanToStore(sendDate, sendStation) {
     // redux操作
     const sendData = {
@@ -19,13 +26,13 @@ export default class ScheduleView extends React.Component {
     this.props.resisterPlan(sendData);
   }
 
+
   render() {
-    console.log(this.props)
+    console.log("ScheduleView > ", this.props.reservedPlan)
     return (
       <div>
         <Header onClick={this.props.signOut} />
-        {/* <p>ログイン済みです uid: {this.props.uid}</p> */}
-        {/* <OutlinedButton onClick={this.props.signOut} label="ログアウト"/> */}
+        <CalendarView reserved={ this.props.reservedPlan.reserved }/>
         <ResistButton sendFunction={this.setPlanToStore}/>
       </div>
     )

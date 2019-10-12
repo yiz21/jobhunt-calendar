@@ -3,7 +3,7 @@ const initialState = {
 }
 
 export const planReducer = (state = initialState, action) => {
-  console.log("planReducer > ", state)
+  console.log("planReducer > ", state.reserved)
   switch (action.type) {
     case 'ADDPLAN':
       let storeCopyObj = Object.assign({}, state);

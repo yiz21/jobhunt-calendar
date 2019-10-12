@@ -4,9 +4,11 @@ import firebase from '../firebase/firebase'
 import scheduleView from '../components/scheduleView'
 
 const mapStateToProps = state => {
+  console.log("mapStateToProps > state", state)
   return {
     // LoginFormのprops.uid.uidにactionsのuidをマッピングする
     uid: state.auth.uid,
+    reservedPlan: state.reservedPlan.reserved,
   }
 }
 

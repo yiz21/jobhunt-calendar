@@ -16,12 +16,15 @@ export default class ScheduleView extends React.Component {
   componentDidUpdate() {
     console.log("scheduleView is updated!!")
   }
+
   setPlanToStore(sendDate, sendStation) {
     // redux操作
     const sendData = {
-      uid: this.props.uid,
-      date: sendDate,
-      station: sendStation
+      reservedData: {
+        uid: this.props.uid,
+        date: sendDate,
+        station: sendStation
+      }
     }
     this.props.resisterPlan(sendData);
   }

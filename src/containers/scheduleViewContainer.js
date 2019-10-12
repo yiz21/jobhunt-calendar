@@ -33,9 +33,10 @@ const mapDispatchToProps = dispatch => {
         })
     },
     resisterPlan: ( info ) => {
+      console.log("resisterPlan > ", info)
       // 既に登録済みの日時については上書きされる
-      firebase.firestore().collection(info.uid).doc(info.date.toString()).set({
-        station: info.station,
+      firebase.firestore().collection(info.reservedData.uid).doc(info.reservedData.date.toString()).set({
+        station: info.reservedData.station,
       })
         .then(() => {
           dispatch(actions.addPlan(info))

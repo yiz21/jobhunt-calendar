@@ -32,8 +32,13 @@ const useStyles = makeStyles(theme => ({
 // 予定登録用のボタン　＝＞　上位コンポーネントからRedux操作用関数を受け取ってonClickで実行する
 export default function ResistButton(props) {
   const [open, setOpen] = React.useState(false);
-  const [reserveDate, setReserveDate] = React.useState(new Date('2019-10-07T01:00:00'));
-  const [reserveStation, setReserveStation] = React.useState('');
+  const [reserveData, setReserveData] = React.useState({
+    date: new Date(),
+    companyName: 'company',
+    station: '新宿',
+ })
+  // const [reserveDate, setReserveDate] = React.useState(new Date('2019-10-07T01:00:00'));
+  // const [reserveStation, setReserveStation] = React.useState('');
   const classes = useStyles();
 
   const openDialog = () => {
@@ -44,17 +49,26 @@ export default function ResistButton(props) {
     setOpen(false);
   }
 
-  const updateReserveDate = (date) => {
-    setReserveDate(date)
+  const updateReserveDate = (_date) => {
+    const copyObj = Object.assign({}, reserveData);
+    copyObj.date = _date;
+    setReserveData(copyObj);
   }
 
   const updateReserveStation =(e) => {
-    setReserveStation(e.target.value)
+    const copyObj = Object.assign({}, reserveData);
+    copyObj.station = e.target.value;
+    setReserveData(copyObj);
   }
-  
+
+  const updateReserveCompanyName =(e) => {
+    const copyObj = Object.assign({}, reserveData);
+    copyObj.companyName = e.target.value;
+    setReserveData(copyObj);
+  }
 
   const sendData = () => {
-    props.sendFunction(reserveDate, reserveStation);
+    props.sendFunction(reserveData);
     closeDialog();
   }
 
@@ -74,7 +88,7 @@ export default function ResistButton(props) {
               id="date-picker-dialog"
               label="日付"
               format="yyyy/MM/dd"
-              value={reserveDate}
+              value={reserveData.date}
               onChange={updateReserveDate}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
@@ -84,13 +98,21 @@ export default function ResistButton(props) {
               margin="normal"
               id="time-picker"
               label="時間"
-              value={reserveDate}
+              value={reserveData.date}
               onChange={updateReserveDate}
               KeyboardButtonProps={{
                 'aria-label': 'change time',
               }}
             />
           </MuiPickersUtilsProvider>
+          <TextField
+            margin="dense"
+            id="name"
+            label="会社名"
+            type="string"
+            fullWidth
+            onChange={(value) => {updateReserveCompanyName(value)}}
+          />
           <TextField
             margin="dense"
             id="name"

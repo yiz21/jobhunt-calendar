@@ -1,31 +1,41 @@
 import React from 'react'
 import ResistButton from './resistrationButton'
-import OutlinedButton from './outlineButton'
+import CalendarView from './calendar'
 import Header from './header'
+import './scheduleView.css'
 
 export default class ScheduleView extends React.Component {
   constructor(props) {
     super(props);
     this.setPlanToStore = this.setPlanToStore.bind(this);
+    console.log("ScheduleView Constructor is called!! > props", props)
+
+    // ここでfirebase上に保存されている登録済み情報を取得する
+    // props.fetchResisteredPlan(props.uid)
   }
 
-  setPlanToStore(sendDate, sendStation) {
-    // redux操作
-    const sendData = {
-      uid: this.props.uid,
-      date: sendDate,
-      station: sendStation
-    }
-    this.props.resisterPlan(sendData);
+  componentDidMount() {
+    console.log("scheduleView is mounted!!")
   }
+
+  componentDidUpdate() {
+    console.log("scheduleView is updated!!")
+  }
+  
+  setPlanToStore(_reserveData) {
+    // redux操作
+    const copyObj = Object.assign({}, _reserveData);
+    copyObj.uid = this.props.uid;
+
+    this.props.resisterPlan(copyObj);
+  }
+
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <Header onClick={this.props.signOut} />
-        {/* <p>ログイン済みです uid: {this.props.uid}</p> */}
-        {/* <OutlinedButton onClick={this.props.signOut} label="ログアウト"/> */}
+        <CalendarView reserved={ this.props.reservedPlan } fetchFunc={this.props.fetchResisteredPlan} uid={this.props.uid}/>
         <ResistButton sendFunction={this.setPlanToStore}/>
       </div>
     )

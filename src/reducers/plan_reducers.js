@@ -3,30 +3,37 @@ const initialState = {
 }
 
 export const planReducer = (state = initialState, action) => {
-  console.log("planReducer > ", state)
+  // console.log("planReducer > state", state)
+  let storeCopyObj = Object.assign({}, state);
   switch (action.type) {
-    case 'ADDPLAN':
-      let storeCopyObj = Object.assign({}, state);
-      console.log("planReducer > storeCopyObj", storeCopyObj)
-
-      // obj.reserved = state.reserved.slice(0, state.reserved.length)
-      let isSameTimeInfoExists = false
-      storeCopyObj.reserved.forEach((value, index) => {
-        // 既に同じ時刻で予定が登録されていたら情報を上書きする
-        if(value.date === action.payload.plan.date) {
-          storeCopyObj.reserved[index].station = action.payload.plan.station
-          isSameTimeInfoExists = true
-          console.log("既に同じ時刻にデータが存在していました")
-        }
-      })
-      if(!isSameTimeInfoExists) {
-        console.log("同じ時刻にデータは存在しませんでした")
-        storeCopyObj.reserved.unshift({
-          "date": action.payload.plan.date,
-          "station": action.payload.plan.station
-        })
-      }
+    case 'ADDPLANS': 
+      // const plansByMonth = {
+      //   '201909': [{
+      //     companyName: '',
+      //     date: ''
+      //   }],
+      //   '201908': [{
+      //     companyName: '',
+      //     date: ''
+      //   }]
+      // }
+      // const plansByYearMonths = plans.reduce((prev, current) => {
+      //   const date = new Date(current.date)
+      //   const year = date.getFullYear();
+      //   const month = ("0"+(date.getMonth() + 1)).slice(-2);
+      //   const key = `${year}${month}`
+      //   const plansByYearMonth = prev[key] || []
+      //   plansByYearMonth.push(current)
+      //   return prev
+      // }, {})  
+      // console.log("plans >  ", plansByYearMonths)
+      return action.payload
+   case 'ADDPLAN':
+      storeCopyObj[action.payload.date] = action.payload
       return storeCopyObj
+
+    case 'CLEARPLANSTORE':
+      return {}
     default:
       return state
   }

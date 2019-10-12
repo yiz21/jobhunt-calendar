@@ -5,9 +5,9 @@ const initialState = {
 export const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'UPDATEUID':
-      console.log("authReducer > UPDATEUID > action.payload.uid", action.payload.uid);
+      console.log("authReducer > UPDATEUID > action.payload.uid", action.payload);
       const auth = Object.assign({}, state.auth);
-      auth.uid = action.payload.uid;
+      auth.uid = action.payload;
       return auth
     default:
       return state

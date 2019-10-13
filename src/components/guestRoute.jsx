@@ -18,7 +18,6 @@ const RouteMustNotAuthenticated = ({uid, component: Component, ...rest}) => {
 }
 
 const mapStateToProps = state => {
-  console.log("RouteMustNotAuthenticated: ", state);
   return {
     uid: state.auth.uid
   }

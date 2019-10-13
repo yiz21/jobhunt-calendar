@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function ListView(props) {
   const classes = useStyles();
-  console.log(props)
   return (
     <List className={classes.root}>
       <ListItem>

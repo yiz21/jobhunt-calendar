@@ -33,12 +33,10 @@ const useStyles = makeStyles(theme => ({
 export default function ResistButton(props) {
   const [open, setOpen] = React.useState(false);
   const [reserveData, setReserveData] = React.useState({
-    date: new Date(),
+    date: new Date(props.activeDate),
     companyName: 'company',
     station: '新宿',
  })
-  // const [reserveDate, setReserveDate] = React.useState(new Date('2019-10-07T01:00:00'));
-  // const [reserveStation, setReserveStation] = React.useState('');
   const classes = useStyles();
 
   const openDialog = () => {

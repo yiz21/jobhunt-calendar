@@ -1,6 +1,7 @@
 div.calendar-container {
   padding-top: 40px;
-  display: flex;
+  padding-left: 20px;
+  display: left;
   justify-content: center;
   align-items: center;
 }
@@ -12,4 +13,12 @@ div.calendar-container > .react-calendar {
 
 div.calendar-container > .react-calendar abbr {
   font-size: 14px;
+}
+
+div.listview-container {
+  padding-top: 10px;
+  padding-left: 20px;
+  display: left;
+  justify-content: center;
+  align-items: center;
 }

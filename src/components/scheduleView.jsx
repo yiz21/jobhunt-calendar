@@ -1,5 +1,4 @@
 import React from 'react'
-import ResistButton from './resistrationButton'
 import CalendarView from './calendar'
 import Header from './header'
 import './scheduleView.css'
@@ -30,13 +29,11 @@ export default class ScheduleView extends React.Component {
     this.props.resisterPlan(copyObj);
   }
 
-
   render() {
     return (
       <div>
         <Header onClick={this.props.signOut} />
-        <CalendarView reserved={ this.props.reservedPlan } fetchFunc={this.props.fetchResisteredPlan} uid={this.props.uid}/>
-        <ResistButton sendFunction={this.setPlanToStore}/>
+        <CalendarView setPlanToStore={this.setPlanToStore} reservedPlan={ this.props.reservedPlan } fetchFunc={this.props.fetchResisteredPlan} uid={this.props.uid}/>
       </div>
     )
   }

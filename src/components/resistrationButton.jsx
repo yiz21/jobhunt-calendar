@@ -57,6 +57,7 @@ export default function ResistButton(props) {
     const copyObj = Object.assign({}, reserveData);
     copyObj.station = e.target.value;
     setReserveData(copyObj);
+    console.log(reserveData)
   }
 
   const updateReserveCompanyName =(e) => {
@@ -66,6 +67,7 @@ export default function ResistButton(props) {
   }
 
   const sendData = () => {
+    console.log("reservedData > ", reserveData)
     props.sendFunction(reserveData);
     closeDialog();
   }

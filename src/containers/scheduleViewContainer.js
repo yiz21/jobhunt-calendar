@@ -35,8 +35,12 @@ const mapDispatchToProps = dispatch => {
     resisterPlan: ( info ) => {
       const year = String(info.date.getFullYear());
       const month = ("0"+(info.date.getMonth() + 1)).slice(-2);
-      const day = ("0"+info.date.getDay()).slice(-2);
+      const day = ("0"+info.date.getDate()).slice(-2);
       const key = `${month}${day}`
+      console.log("resisterPlan > year", year)
+      console.log("resisterPlan > month", month)
+      console.log("resisterPlan > day",day)
+      console.log("resisterPlan > key", key)
       // 既に登録済みの日時については上書きされる
       firebase.firestore().collection("plan").doc(info.uid)
         .collection(year).doc(key)

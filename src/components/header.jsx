@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
 		fontWeight: "bold",
 		color: "#f7f9fa",
 		fontSize: "24px",
+		zIndex: "1000",
 	},
 	titleContainer: {
 		display: "inline-block",

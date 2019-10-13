@@ -4,7 +4,6 @@ import firebase from '../firebase/firebase'
 import scheduleView from '../components/scheduleView'
 
 const mapStateToProps = state => {
-  // console.log("mapStateToProps > state", state)
   return {
     // LoginFormのprops.uid.uidにactionsのuidをマッピングする
     uid: state.auth.uid,
@@ -37,10 +36,6 @@ const mapDispatchToProps = dispatch => {
       const month = ("0"+(info.date.getMonth() + 1)).slice(-2);
       const day = ("0"+info.date.getDate()).slice(-2);
       const key = `${month}${day}`
-      console.log("resisterPlan > year", year)
-      console.log("resisterPlan > month", month)
-      console.log("resisterPlan > day",day)
-      console.log("resisterPlan > key", key)
       // 既に登録済みの日時については上書きされる
       firebase.firestore().collection("plan").doc(info.uid)
         .collection(year).doc(key)

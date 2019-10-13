@@ -47,17 +47,22 @@ export default class CalendarView extends React.Component {
     const displayedPlan = this.isExistPlan(date)
 
     if(!displayedPlan) {
-      return
+      return (
+        <div className="date-null-container">
+          <br/>
+        </div>
+      )
     }
 
     // カレンダーに表示する会社名は最大４文字とする
     displayedPlan.companyName = displayedPlan.companyName.slice(0, 4)
     console.log(typeof displayedPlan.companyName)
     return (
-      <p>
-        <br/>
-        { displayedPlan ? displayedPlan.companyName : ''}
-      </p>
+      <div className="date-container">
+        <p>
+          { displayedPlan ? displayedPlan.companyName : ''}
+        </p>
+      </div>
     )
   }
 

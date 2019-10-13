@@ -22,3 +22,21 @@ div.listview-container {
   justify-content: center;
   align-items: center;
 }
+
+div.date-null-container {
+  padding: 0;
+  margin:  0;
+}
+
+div.date-container {
+  padding: 0;
+  margin:  0;
+  background: #d6ebff;
+  box-shadow: 0px 0px 0px 0px #d6ebff;
+  border: dashed 2px white;
+}
+
+div.date-container p {
+  margin: 0; 
+  padding: 0;
+}

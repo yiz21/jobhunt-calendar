@@ -105,7 +105,10 @@ export default class CalendarView extends React.Component {
     //   "station": "qqq"
     // }
     const dateObj = new Date(info.fulldate)
-    info.time = String(dateObj.getHours()) + ':' + String(dateObj.getMinutes()) + '~'
+    const hours = ("0" + dateObj.getHours()).slice(-2);
+    const minutes = ("0" + dateObj.getMinutes()).slice(-2);
+
+    info.time = hours + ':' + minutes + '~'
     return info
   }
 

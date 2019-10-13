@@ -55,7 +55,6 @@ export default class CalendarView extends React.Component {
 
     // カレンダーに表示する会社名は最大４文字とする
     displayedPlan.companyName = displayedPlan.companyName.slice(0, 4)
-    console.log(typeof displayedPlan.companyName)
     return (
       <div className="date-container">
         <p>
@@ -87,11 +86,6 @@ export default class CalendarView extends React.Component {
       previewInfo: convertedInfo
     })
     return 
-  }
-
-  updateCalendarView = () => {
-    
-    console.log(this.props.reservedPlan)
   }
 
   convertDataForListView = (info) => {

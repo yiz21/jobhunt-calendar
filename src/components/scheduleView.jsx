@@ -7,20 +7,11 @@ export default class ScheduleView extends React.Component {
   constructor(props) {
     super(props);
     this.setPlanToStore = this.setPlanToStore.bind(this);
-    console.log("ScheduleView Constructor is called!! > props", props)
 
     // ここでfirebase上に保存されている登録済み情報を取得する
     // props.fetchResisteredPlan(props.uid)
   }
 
-  componentDidMount() {
-    console.log("scheduleView is mounted!!")
-  }
-
-  componentDidUpdate() {
-    console.log("scheduleView is updated!!")
-  }
-  
   setPlanToStore(_reserveData) {
     // redux操作
     const copyObj = Object.assign({}, _reserveData);

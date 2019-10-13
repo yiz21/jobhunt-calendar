@@ -1,0 +1,15 @@
+div.calendar-container {
+  padding-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.calendar-container > .react-calendar {
+  width: 800px;
+  margin-top: 20px;
+}
+
+div.calendar-container > .react-calendar abbr {
+  font-size: 14px;
+}

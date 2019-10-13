@@ -1,41 +1,58 @@
 import React from 'react';
 import Calendar from 'react-calendar';
+import ListView from './listView';
+import ResistButton from './resistrationButton'
 import './calendar.css'
 
 export default class CalendarView extends React.Component {
   constructor(props) {
-    console.log("CalendarView > Constructor > props", props)
     super(props);
+    this.state =  {
+      date: new Date(),
+      previewInfo:{
+        companyName: "",
+        time: "",
+        station: ""
+      }
+    }
     this.getTileContent = this.getTileContent.bind(this);
     // firebase上に登録されている情報とローカルストアを同期する
     props.fetchFunc(props.uid)
   }
   
-  // ストアにkeyと同じ日付のデータがあればそのインデックスを返す。なければfalseを返す
-  isExistPlan = (key) => {
+  // ストアにkeyと同じ日付のデータがあればそのオブジェクトを返す。なければfalseを返す
+  isExistPlan = (date) => {
+    const year = String(date.getFullYear());
+    const month = ("0"+ (date.getMonth() + 1)).slice(-2);
+    const day = ("0"+ date.getDate()).slice(-2); 
+    const key = year + month + day
+
     let displayedPlan = false
-    this.props.reserved.forEach((planData, index) => {
-      if (planData.date === key) {
-        displayedPlan = planData
+    console.log(typeof this.props.reservedPlan)
+    Object.keys(this.props.reservedPlan).forEach((index) => {
+      // 存在していたらフラグにオブジェクトをセット
+      if (this.props.reservedPlan[index].date === key) {
+        displayedPlan = this.props.reservedPlan[index]
       }  
     })
     return displayedPlan
   }
+
+  // 各カレンダー日付表示部に表示する内容を生成
   getTileContent = ({ date, view }) => {
     if(view!== 'month') {
-      return null;
-    }
-    const year = String(date.getFullYear());
-    const month = ("0"+ (date.getMonth() + 1)).slice(-2);
-    const day = ("0"+ date.getDate()).slice(-2); // 1日進んでいる
-    const key = year + month + day
-    const displayedPlan = this.isExistPlan(key)
-    console.log(displayedPlan)
-
-    if(displayedPlan) {
-      console.log(displayedPlan)
+      return 
     }
 
+    const displayedPlan = this.isExistPlan(date)
+
+    if(!displayedPlan) {
+      return
+    }
+
+    // カレンダーに表示する会社名は最大４文字とする
+    displayedPlan.companyName = displayedPlan.companyName.slice(0, 4)
+    console.log(typeof displayedPlan.companyName)
     return (
       <p>
         <br/>
@@ -44,14 +61,67 @@ export default class CalendarView extends React.Component {
     )
   }
 
+  updateListView = (value) => {
+    // value => "Thu Oct 24 2019 00:00:00 GMT+0900 (日本標準時)"
+    const previewInfo = this.isExistPlan(value)
+    if (!previewInfo) {
+      this.setState({
+        date: value,
+        previewInfo:
+        {
+          companyName: "",
+          time: "",
+          station: ""
+        }
+      })
+      return
+    }
+    const convertedInfo = this.convertDataForListView(previewInfo)
+    this.setState({
+      date: new Date(),
+      activeDate: value,
+      previewInfo: convertedInfo
+    })
+    return 
+  }
+
+
+  convertDataForListView = (info) => {
+    // 変換前
+    // {
+    //   "companyName": "a",
+    //   "date": "20191002",
+    //   "fulldate": "Tue Oct 01 2019 15:34:00 GMT+0900 (日本標準時)",
+    //   "station": "qqq"
+    // }
+    // 変換後
+    // {
+    //   "companyName": "a",
+    //   "date": "20191002",
+    //   "fulldate": "Tue Oct 01 2019 15:34:00 GMT+0900 (日本標準時)",
+    //   "time"": "15:34:00",
+    //   "station": "qqq"
+    // }
+    const dateObj = new Date(info.fulldate)
+    info.time = String(dateObj.getHours()) + ':' + String(dateObj.getMinutes()) + '~'
+    return info
+  }
+
   render() {
     return (
-      <div className="calendar-container">
-        <Calendar
-          onActiveDateChange={() => {console.log("hello")}}
-          onChange={() => {console.log("hello")}}
-          tileContent={this.getTileContent}
-        />
+      <div>
+        <div className="calendar-container">
+          <Calendar
+            locale="ja-JP"
+            value={this.state.date}
+            onClickDay={this.updateListView}
+            tileContent={this.getTileContent}
+          />
+        </div>
+        <div className="listview-container">
+          <ListView previewInfo={this.state.previewInfo}/>
+          <ResistButton activeDate={this.state.date} sendFunction={this.props.setPlanToStore}/>
+        </div>
       </div>
     )
   }

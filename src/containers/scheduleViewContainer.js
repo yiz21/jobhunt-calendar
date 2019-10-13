@@ -47,6 +47,7 @@ const mapDispatchToProps = dispatch => {
           companyName: info.companyName
         })
         .then(() => {
+          // ここで渡しているのはオブジェクト
           dispatch(actions.addPlan(info))
         })
     },
@@ -62,7 +63,7 @@ const mapDispatchToProps = dispatch => {
         .then((plansQuery) => {
           const plans = []
           plansQuery.forEach(planDoc => plans.push(planDoc.data()))
-          console.log("plans >  ", plans)
+          // ここで渡しているのは配列
           dispatch(actions.addPlans(plans))
         })
     }

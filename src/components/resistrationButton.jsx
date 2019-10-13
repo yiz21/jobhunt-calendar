@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
-import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -18,6 +17,9 @@ import {
 
 const useStyles = makeStyles(theme => ({
   root: {
+    height: "40px",
+    display: "flex",
+    alignItems: 'flex-end',
     '& > span': {
       margin: theme.spacing(2),
     },
@@ -75,9 +77,12 @@ export default function ResistButton(props) {
   return (
     <div className={classes.root}>
       {/* ダイアログを開くためのアイコン */}
-      <Icon className={classes.iconHover} color="error" style={{ fontSize: 30 }} onClick={openDialog}>
-        add_circle
-      </Icon>
+      {/* <Icon className={classes.iconHover} color="error" style={{ fontSize: 30 }} onClick={openDialog}> */}
+      {/* <span>add_circle</span> */}
+      {/* </Icon> */}
+      <button class="addPlanBtn" onClick={openDialog}>
+        <span >予定を登録する</span>
+      </button>
       {/* 登録する情報を入力するためのダイアログ */}
       <Dialog open={open} onClose={closeDialog} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">予定の登録</DialogTitle>

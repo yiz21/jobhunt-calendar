@@ -1,14 +1,20 @@
-div.calendar-container {
-  padding-top: 40px;
-  padding-left: 20px;
-  display: left;
+div.calendar-view {
+  display: flex;
+  padding-top: 80px;
   justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
+}
+
+div.calendar-container {
+  padding-left: 20px;
+  flex: 1 1 600px;
+  max-width: 600px;
+  min-width: 400px;
 }
 
 div.calendar-container > .react-calendar {
-  width: 800px;
-  margin-top: 20px;
+  width: 100%;
+  margin-top: 5px;
 }
 
 div.calendar-container > .react-calendar abbr {
@@ -16,11 +22,26 @@ div.calendar-container > .react-calendar abbr {
 }
 
 div.listview-container {
-  padding-top: 10px;
-  padding-left: 20px;
+  border: 1px solid #a0a096;
+  margin-left: 20px;
   display: left;
   justify-content: center;
   align-items: center;
+  flex: 1 1;
+  min-width: 500px;
+  max-width: 600px;
+  margin-top: 45px;
+}
+
+div.listview-container > h2 {
+  font-size: 24px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding-left: 18px;
+}
+
+div.listview-container > .MuiList-padding {
+  padding: 0;
 }
 
 div.date-null-container {
@@ -39,4 +60,31 @@ div.date-container {
 div.date-container p {
   margin: 0; 
   padding: 0;
+}
+
+button.addPlanBtn {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+	background-color:#f9f9f9;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+
+button.addPlanBtn:hover {
+	background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+	background-color:#e9e9e9;
+}
+
+button.addPlanBtn:active {
+	position:relative;
+	top:1px;
 }

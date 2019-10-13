@@ -28,7 +28,6 @@ export default class CalendarView extends React.Component {
     const key = year + month + day
 
     let displayedPlan = false
-    console.log(typeof this.props.reservedPlan)
     Object.keys(this.props.reservedPlan).forEach((index) => {
       // 存在していたらフラグにオブジェクトをセット
       if (this.props.reservedPlan[index].date === key) {
@@ -90,6 +89,10 @@ export default class CalendarView extends React.Component {
     return 
   }
 
+  updateCalendarView = () => {
+    
+    console.log(this.props.reservedPlan)
+  }
 
   convertDataForListView = (info) => {
     // 変換前
@@ -114,8 +117,9 @@ export default class CalendarView extends React.Component {
 
   render() {
     return (
-      <div>
+      <div class="calendar-view">
         <div className="calendar-container">
+          <ResistButton activeDate={this.state.date} sendFunction={this.props.setPlanToStore}/>
           <Calendar
             locale="ja-JP"
             value={this.state.date}
@@ -124,8 +128,8 @@ export default class CalendarView extends React.Component {
           />
         </div>
         <div className="listview-container">
+          <h2>予定詳細</h2>
           <ListView previewInfo={this.state.previewInfo}/>
-          <ResistButton activeDate={this.state.date} sendFunction={this.props.setPlanToStore}/>
         </div>
       </div>
     )

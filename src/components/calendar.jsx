@@ -114,7 +114,7 @@ export default class CalendarView extends React.Component {
 
   render() {
     return (
-      <div class="calendar-view">
+      <div className="calendar-view">
         <div className="calendar-container">
           <ResistButton activeDate={this.state.date} sendFunction={this.props.setPlanToStore}/>
           <Calendar

@@ -16,10 +16,22 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
+  MessageAboutNothingToShow: {
+    textAlign: "center"
+  }
 }));
 
-export default function ListView(props) {
+export default function ListView(props) {  
+  console.log(props.previewInfo)
   const classes = useStyles();
+  if((props.previewInfo.companyName === "" ) && (props.previewInfo.time === "") && (props.previewInfo.station === "")) {
+    return (
+      <div className={classes.MessageAboutNothingToShow}>
+        <span>何も登録されていません</span>
+      </div>
+    )
+  }
+
   return (
     <List className={classes.root}>
       <ListItem>

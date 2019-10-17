@@ -42,6 +42,10 @@ export default function ResistButton(props) {
   const classes = useStyles();
 
   const openDialog = () => {
+    console.log("props.activeDate > ", props.activeDate)
+    const copyObj = Object.assign({}, reserveData);
+    copyObj.date = props.activeDate
+    setReserveData(copyObj);
     setOpen(true);
   }
   
@@ -78,7 +82,7 @@ export default function ResistButton(props) {
       {/* <Icon className={classes.iconHover} color="error" style={{ fontSize: 30 }} onClick={openDialog}> */}
       {/* <span>add_circle</span> */}
       {/* </Icon> */}
-      <button class="addPlanBtn" onClick={openDialog}>
+      <button className="addPlanBtn" onClick={openDialog}>
         <span >予定を登録する</span>
       </button>
       {/* 登録する情報を入力するためのダイアログ */}

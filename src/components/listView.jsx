@@ -22,7 +22,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ListView(props) {  
-  console.log(props.previewInfo)
   const classes = useStyles();
   if((props.previewInfo.companyName === "" ) && (props.previewInfo.time === "") && (props.previewInfo.station === "")) {
     return (

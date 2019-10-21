@@ -19,10 +19,30 @@ const addPlans = (info) => {
   }
 }
 
+const fetchCharacterChipSets = (chipSets) => {
+  return {
+    type: 'FETCHCHARACHIPSETS',
+    payload: chipSets
+  }
+}
+
+const addCharacterChipSet = (chipSet) => {
+  return {
+    type: 'ADDCHARACHIPSET',
+    payload: chipSet
+  }
+}
+
 const clearPlanStore = () => {
   return {
     type: 'CLEARPLANSTORE'
   }
 }
 
-export { updateUid, addPlan, clearPlanStore, addPlans }
+const clearChipSetStore = () => {
+  return {
+    type: 'CLEARCHIPSETSTORE'
+  }
+}
+
+export { updateUid, addPlan, clearPlanStore, addPlans, fetchCharacterChipSets, clearChipSetStore, addCharacterChipSet }

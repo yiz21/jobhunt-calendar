@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     // LoginFormのprops.uid.uidにactionsのuidをマッピングする
     uid: state.auth.uid,
     reservedPlan: state.reservedPlan,
+    chipSet: state.chipSet,
   }
 }
 
@@ -43,12 +44,35 @@ const mapDispatchToProps = dispatch => {
           station: info.station,
           date: year + month + day,
           fulldate: info.date.toString(), // Sun Oct 13 2019 01:00:00 GMT+0900 (日本標準時)
-          companyName: info.companyName
+          companyName: info.companyName,
+          companyCharacters: info.companyCharacters,
         })
         .then(() => {
           // ここで渡しているのはオブジェクト
           dispatch(actions.addPlan(info))
         })
+      
+      // 今回登録されたキーワード全てについて、登録されていないキーワードがあればfirebase上に登録する
+      info.companyCharacters.forEach(characterKeyword => {
+        let isExist = false // firebase上に登録済みか否かのフラグ
+        firebase.firestore().collection('chipset').doc(info.uid).collection('company-character').get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              if(characterKeyword === doc.data().label){
+                isExist = true
+              }
+            })
+          })
+          .then(() => {
+            // firebase上に登録されていなかったらキーワードとして新しく登録する
+            if(!isExist) {
+              firebase.firestore().collection('chipset').doc(info.uid).collection('company-character').doc().set({
+                label: characterKeyword
+              })
+            }
+          })
+      })
+
     },
     fetchResisteredPlan: (uid) => {
       // firebase上に保存しているデータ構造
@@ -57,6 +81,7 @@ const mapDispatchToProps = dispatch => {
       // collection => (yyyy)   ：年
       // document   => (mmdd)　  ：月日
       dispatch(actions.clearPlanStore())
+
       const today = new Date()
       firebase.firestore().collection("plan").doc(uid).collection(String(today.getFullYear())).get()
         .then((plansQuery) => {
@@ -65,7 +90,31 @@ const mapDispatchToProps = dispatch => {
           // ここで渡しているのは配列
           dispatch(actions.addPlans(plans))
         })
-    }
+
+    },
+    fetchChipSet: (uid) => {
+      // 最初にストアにあるチップセットのリストを空にする
+      dispatch(actions.clearChipSetStore())
+
+      // firebaseから会社の特徴に登録済みのチップセットリストを取得
+      firebase.firestore().collection("chipset").doc(uid).collection("company-character").get()
+        .then((characterQuery) => {
+          const characterChipSets = []
+          characterQuery.forEach(characterDoc => characterChipSets.push({
+            id: characterDoc.id,
+            label: characterDoc.data().label
+          }))
+          dispatch(actions.fetchCharacterChipSets(characterChipSets))
+      })
+    },
+    addChipSet: (uid, _label) => {
+      firebase.firestore.collection("chipset").doc(uid).collection("company-character").doc().set({
+        label: _label
+      })
+        .then(() => {
+          this.fetchChipSet(uid);
+        })
+    },
   }
 }
 

@@ -17,7 +17,6 @@ export default class CalendarView extends React.Component {
     }
     this.getTileContent = this.getTileContent.bind(this);
     // firebase上に登録されている情報とローカルストアを同期する
-    props.fetchFunc(props.uid)
   }
   
   // ストアにkeyと同じ日付のデータがあればそのオブジェクトを返す。なければfalseを返す
@@ -116,7 +115,12 @@ export default class CalendarView extends React.Component {
     return (
       <div className="calendar-view">
         <div className="calendar-container">
-          <ResistButton activeDate={this.state.date} sendFunction={this.props.setPlanToStore}/>
+          <ResistButton
+            activeDate={this.state.date}
+            sendFunction={this.props.setPlanToStore}
+            chipSet={this.props.chipSet}
+            addChipSetFunc={this.props.addChipSetFunc}
+          />
           <Calendar
             locale="ja-JP"
             value={this.state.date}

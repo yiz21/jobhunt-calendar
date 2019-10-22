@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import WorkIcon from '@material-ui/icons/Work';
 import AccessAlarmsSharp from '@material-ui/icons/AccessAlarmsSharp';
 import TrainRounded from '@material-ui/icons/TrainRounded';
-
+import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,10 +18,16 @@ const useStyles = makeStyles(theme => ({
   },
   MessageAboutNothingToShow: {
     textAlign: "center"
+  },
+  tagContainer: {
+    width: '100%',
+    maxWidth: '640px',
+    marginLeft: '16px',
+    marginBottom: '8px',
   }
 }));
 
-export default function ListView(props) {  
+export default function ListView(props) {
   const classes = useStyles();
   if((props.previewInfo.companyName === "" ) && (props.previewInfo.time === "") && (props.previewInfo.station === "")) {
     return (
@@ -32,33 +38,46 @@ export default function ListView(props) {
   }
 
   return (
-    <List className={classes.root}>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <WorkIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="会社名" secondary={props.previewInfo.companyName} />
-      </ListItem>
+    <div>
+      <List className={classes.root}>
+        <ListItem className={classes.listItem}>
+          <ListItemAvatar>
+            <Avatar>
+              <WorkIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="会社名" secondary={props.previewInfo.companyName} />
+        </ListItem>
 
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <AccessAlarmsSharp/>
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="時間" secondary={props.previewInfo.time} />
-      </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <AccessAlarmsSharp/>
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="時間" secondary={props.previewInfo.time} />
+        </ListItem>
 
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-            <TrainRounded/>
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="最寄駅" secondary={props.previewInfo.station} />
-      </ListItem>
-    </List>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <TrainRounded/>
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="最寄駅" secondary={props.previewInfo.station} />
+        </ListItem>
+      </List>
+      <div className={classes.tagContainer}>
+      {/* タグが登録されていないとエラーになる */}
+      {/* タグが登録されていないとエラーになる */}
+        {
+          (props.previewInfo.companyCharacters === undefined || props.previewInfo.companyCharacters.length == 0) ? 
+          '' : 
+          (props.previewInfo.companyCharacters.map((character) => {
+            return <Chip label={character} />
+          }))
+        }
+      </div>
+    </div>
   );
 }

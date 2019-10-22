@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
@@ -14,6 +14,8 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import ChipInputHelper from './chipInputHelper'
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,26 +25,50 @@ const useStyles = makeStyles(theme => ({
     '& > span': {
       margin: theme.spacing(2),
     },
-  },
-  iconHover: {
-    '&:hover': {
-      color: red[800],
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
     },
   },
+  chipInputHelper: {
+    marginTop: '8px',
+    paddingTop: '8px',
+  }
 }));
 
 // 予定登録用のボタン　＝＞　上位コンポーネントからRedux操作用関数を受け取ってonClickで実行する
 export default function ResistButton(props) {
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [reserveData, setReserveData] = React.useState({
     date: new Date(props.activeDate),
     companyName: 'company',
     station: '新宿',
- })
-  const classes = useStyles();
+    companyCharacters: props.chipSet,
+  })
+  const [defaultCompanyCharacterChipSet, setDefaultCompanyCharacterChipSet] = React.useState(props.chipSet)
+
+  // chipSetオブジェクトをlabelのみの配列形式に変換
+  useEffect(() => {
+    const chipLabelArray = []
+    Object.keys(props.chipSet).map(key => {
+      chipLabelArray.push(props.chipSet[key].label)
+    })
+    setDefaultCompanyCharacterChipSet(chipLabelArray); // 登録済みチップセットをStateに書き込む
+
+    // デフォルトの送信データのcompanyCharactersも配列に変換しておく（チップセットを触らない状態で登録するとオブジェクトのままになってしまうため）
+    setReserveData({
+      date: new Date(props.activeDate),
+      companyName: 'company',
+      station: '新宿',
+      companyCharacters: chipLabelArray,
+    })
+  }, []) // 空配列を引数に渡すことでマウント＆アンマウント時のみ実行する（本来は更新の依存値をセットする）
+
+
 
   const openDialog = () => {
-    console.log("props.activeDate > ", props.activeDate)
     const copyObj = Object.assign({}, reserveData);
     copyObj.date = props.activeDate
     setReserveData(copyObj);
@@ -71,6 +97,12 @@ export default function ResistButton(props) {
     setReserveData(copyObj);
   }
 
+  const updateReserveCompanyCharacters =(characters) => {
+    const copyObj = Object.assign({}, reserveData);
+    copyObj.companyCharacters = characters;
+    setReserveData(copyObj);
+  }
+
   const sendData = () => {
     props.sendFunction(reserveData);
     closeDialog();
@@ -78,10 +110,6 @@ export default function ResistButton(props) {
 
   return (
     <div className={classes.root}>
-      {/* ダイアログを開くためのアイコン */}
-      {/* <Icon className={classes.iconHover} color="error" style={{ fontSize: 30 }} onClick={openDialog}> */}
-      {/* <span>add_circle</span> */}
-      {/* </Icon> */}
       <button className="addPlanBtn" onClick={openDialog}>
         <span >予定を登録する</span>
       </button>
@@ -128,6 +156,9 @@ export default function ResistButton(props) {
             fullWidth
             onChange={(value) => {updateReserveStation(value)}}
           />
+          <div className={classes.chipInputHelper}>
+            <ChipInputHelper chipSet={defaultCompanyCharacterChipSet} onChange={updateReserveCompanyCharacters}/>
+          </div>    
         </DialogContent>
         <DialogActions>
           <Button onClick={closeDialog} color="primary">

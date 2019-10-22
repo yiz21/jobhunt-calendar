@@ -66,9 +66,11 @@ export default class CalendarView extends React.Component {
   updateListView = (value) => {
     // value => "Thu Oct 24 2019 00:00:00 GMT+0900 (日本標準時)"
     const previewInfo = this.isExistPlan(value)
+    // valueで渡された日付に予定が存在していなかったら
     if (!previewInfo) {
       this.setState({
         date: value,
+        activeDate: value,
         previewInfo:
         {
           companyName: "",
@@ -80,7 +82,7 @@ export default class CalendarView extends React.Component {
     }
     const convertedInfo = this.convertDataForListView(previewInfo)
     this.setState({
-      date: new Date(),
+      date: value,
       activeDate: value,
       previewInfo: convertedInfo
     })
